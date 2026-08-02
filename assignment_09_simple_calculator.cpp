@@ -67,9 +67,124 @@
 // =============================================================================
 // YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
 // =============================================================================
-
+// =============================================================================
 #include <iostream>
 #include <iomanip>
 #include <cmath>
 using namespace std;
 
+double add(double a, double b) {
+    return a + b;
+}
+
+double subtract(double a, double b) {
+    return a - b;
+}
+
+double multiply(double a, double b) {
+    return a * b;
+}
+
+double divide(double a, double b, bool& success) {
+    if (b == 0) {
+        success = false;
+        return 0;
+    }
+    success = true;
+    return a / b;
+}
+
+double computeModulus(double a, double b, bool& success) {
+    if (b == 0) {
+        success = false;
+        return 0;
+    }
+    success = true;
+    return fmod(a, b);
+}
+
+double exponentiate(double base, double exponent) {
+    return pow(base, exponent);
+}
+
+void printMenu() {
+    cout << "\n============================" << endl;
+    cout << "      SIMPLE CALCULATOR" << endl;
+    cout << "============================" << endl;
+    cout << "1. Addition" << endl;
+    cout << "2. Subtraction" << endl;
+    cout << "3. Multiplication" << endl;
+    cout << "4. Division" << endl;
+    cout << "5. Modulus" << endl;
+    cout << "6. Exponentiation" << endl;
+    cout << "7. Quit" << endl;
+    cout << "Select an operation (1-7): ";
+}
+
+int main() {
+    int choice;
+    bool running = true;
+
+    cout << fixed << setprecision(2);
+
+    while (running) {
+        printMenu();
+        cin >> choice;
+
+        if (choice == 7) {
+            cout << "Goodbye!" << endl;
+            running = false;
+            continue;
+        }
+
+        if (choice < 1 || choice > 7) {
+            cout << "Error: please select a number from 1 to 7." << endl;
+            continue;
+        }
+
+        double a, b;
+        cout << "Enter first number : ";
+        cin >> a;
+        cout << "Enter second number: ";
+        cin >> b;
+
+        bool success = true;
+        double result = 0;
+        char op = ' ';
+
+        switch (choice) {
+            case 1:
+                result = add(a, b);
+                op = '+';
+                break;
+            case 2:
+                result = subtract(a, b);
+                op = '-';
+                break;
+            case 3:
+                result = multiply(a, b);
+                op = '*';
+                break;
+            case 4:
+                result = divide(a, b, success);
+                op = '/';
+                break;
+            case 5:
+                result = computeModulus(a, b, success);
+                op = '%';
+                break;
+            case 6:
+                result = exponentiate(a, b);
+                op = '^';
+                break;
+        }
+
+        if (!success) {
+            cout << "Error: Cannot divide by zero." << endl;
+        } else {
+            cout << "Result: " << a << " " << op << " " << b << " = " << result << endl;
+        }
+    }
+
+    return 0;
+}
